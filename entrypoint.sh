@@ -9,6 +9,8 @@ else
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
 fi
 
+cat $HOME/git.log
+
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
 FREQUENCIES=`cat $HOME/frecuencies.csv`
 
