@@ -3,7 +3,6 @@ FROM openjdk:16-slim
 ENV USER gitloganalyzer
 ENV UID 1001
 ENV HOME /home/$USER
-ENV 
 
 WORKDIR $HOME
 
