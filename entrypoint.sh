@@ -1,16 +1,18 @@
 #!/bin/sh 
 
-ls -la
+HOME=/home/gitloganalyzer
 
 if [ -z "$INPUT_INIT_DATE"] && [ -z "$INPUT_END_DATE"]; then
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > git.log
+    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > $HOME/git.log
 else
     MIN_DATE=$(date +'%Y-%m-%d' -d 'last month')
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > git.log
+    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
 fi
 
-FREQUENCIES=$(java -jar /home/gitloganalyzer/gitloganalyzer.jar -f git.log)
-COUPLING=$(java -jar /home/gitloganalyzer/gitloganalyzer.jar -f git.log -coupling $INPUT_MIN_COCHANGES)
+ls -la $HOME
+
+FREQUENCIES=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log)
+COUPLING=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES)
 
 if [ -z "$FREQUENCIES"] && [ -z "$COUPLING"]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
