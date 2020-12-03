@@ -2,6 +2,8 @@
 
 HOME=/home/gitloganalyzer
 
+git --version
+
 if [ -n "$INPUT_INIT_DATE" ] && [ -n "$INPUT_END_DATE" ]; then
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > $HOME/git.log
 else
@@ -9,7 +11,8 @@ else
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
 fi
 
-cat $HOME/git.log
+GITLOG=`cat $HOME/git.log`
+echo gitlog $GITLOG
 
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
 FREQUENCIES=`cat $HOME/frecuencies.csv`
