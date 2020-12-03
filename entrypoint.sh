@@ -4,22 +4,17 @@ HOME=/home/gitloganalyzer
 
 git --version
 
-if [[ -n "$INPUT_INIT_DATE" && -n "$INPUT_END_DATE" ]]; then
-    echo "Using start date $INPUT_INIT_DATE and end date $INPUT_END_DATE"
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > $HOME/git.log
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE
+if [ -n "$INPUT_INIT_DATE" ]; then
+    echo "Using start date $INPUT_INIT_DATE"
+    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE > $HOME/git.log
 else
     MIN_DATE=$(date +'%Y-%m-%d' -d 'last month')
     echo "Looking for commits since $MIN_DATE"
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE
 fi
 
-java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
-FREQUENCIES=`cat $HOME/frecuencies.csv`
-
-java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES > $HOME/coupling.csv
-COUPLING=`cat $HOME/coupling.csv`
+FREQUENCIES=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log)
+COUPLING=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES)
 
 if [ -n "$FREQUENCIES" ]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
