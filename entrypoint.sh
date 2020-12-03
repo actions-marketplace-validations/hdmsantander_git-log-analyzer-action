@@ -1,10 +1,12 @@
 #!/bin/sh 
 
+ls -la
+
 if [ -z "$INPUT_INIT_DATE"] && [ -z "$INPUT_END_DATE"]; then
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE
+    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > git.log
 else
     MIN_DATE=$(date +'%Y-%m-%d' -d 'last month')
-    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE
+    git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > git.log
 fi
 
 FREQUENCIES=$(java -jar /home/gitloganalyzer/gitloganalyzer.jar -f git.log)
