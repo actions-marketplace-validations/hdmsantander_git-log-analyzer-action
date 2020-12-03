@@ -4,15 +4,14 @@ HOME=/home/gitloganalyzer
 
 git --version
 
-if [ -n "$INPUT_INIT_DATE" ] && [ -n "$INPUT_END_DATE" ]; then
+if [[ -n "$INPUT_INIT_DATE" && -n "$INPUT_END_DATE" ]]; then
+    echo "Using start date $INPUT_INIT_DATE and end date $INPUT_END_DATE"
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$INPUT_INIT_DATE --before=$INPUT_END_DATE > $HOME/git.log
 else
     MIN_DATE=$(date +'%Y-%m-%d' -d 'last month')
+    echo "Looking for commits since $MIN_DATE"
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
 fi
-
-GITLOG=`cat $HOME/git.log`
-echo gitlog $GITLOG
 
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
 FREQUENCIES=`cat $HOME/frecuencies.csv`
