@@ -12,7 +12,16 @@ fi
 ls -la $HOME
 
 FREQUENCIES=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log)
+echo $FREQUENCIES
+
+java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log
+
 COUPLING=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES)
+echo $COUPLING
+
+java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES
+
+
 
 if [ -z "$FREQUENCIES"] && [ -z "$COUPLING"]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
