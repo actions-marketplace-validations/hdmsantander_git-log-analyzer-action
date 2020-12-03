@@ -9,19 +9,15 @@ else
     git log --pretty=format:'[%h] %an %ad %s' --date=short --numstat --after=$MIN_DATE > $HOME/git.log
 fi
 
-ls -la $HOME
+java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
+FREQUENCIES=$(cat $HOME/frecuencies.csv)
 
-FREQUENCIES=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log)
-echo $FREQUENCIES
+echo $FRECUENCIES
 
-java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log
+java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES > $HOME/coupling.csv
+COUPLING=$(cat $$HOME/coupling.csv)
 
-COUPLING=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES)
 echo $COUPLING
-
-java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES
-
-
 
 if [ -z "$FREQUENCIES"] && [ -z "$COUPLING"]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
