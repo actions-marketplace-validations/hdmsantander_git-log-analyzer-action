@@ -12,17 +12,17 @@ fi
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
 FREQUENCIES=`cat $HOME/frecuencies.csv`
 
-echo frecuencies $FRECUENCIES
-
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES > $HOME/coupling.csv
 COUPLING=`cat $HOME/coupling.csv`
 
-echo coupling $COUPLING
-
-if [ -z "$FREQUENCIES"] && [ -z "$COUPLING"]; then
+if [ -z "$FREQUENCIES"]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
+else
+    echo "::set-output name=frecuencies::empty"
+fi
+
+if [ -z "$COUPLING"]; then
     echo "::set-output name=coupling::$COUPLING"
 else
-    echo "::set-output name=frecuencies::error"
-    echo "::set-output name=coupling::error"
+    echo "::set-output name=coupling::empty"
 fi
