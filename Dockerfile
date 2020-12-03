@@ -3,6 +3,7 @@ FROM openjdk:16-slim
 ENV USER gitloganalyzer
 ENV UID 1001
 ENV HOME /home/$USER
+ENV 
 
 WORKDIR $HOME
 
@@ -18,4 +19,4 @@ COPY gitloganalyzer.jar $HOME
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","/entrypoint.sh"]
