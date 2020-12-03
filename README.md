@@ -7,10 +7,6 @@ Executes an analysis of a git log file to determine coupling and commit frequenc
 
 Starting date to analyze git log from, format is: yyyy-mm-dd.
 
-### end date
-
-Ending date of the git log analysis, format is: yyyy-mm-dd.
-
 ### min cochanges
 
 Minimum number of cochanges to report in coupling analysis. Defaults to zero.
