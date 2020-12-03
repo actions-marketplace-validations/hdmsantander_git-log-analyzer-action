@@ -10,14 +10,14 @@ else
 fi
 
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log > $HOME/frecuencies.csv
-FREQUENCIES=$(cat $HOME/frecuencies.csv)
+FREQUENCIES=`cat $HOME/frecuencies.csv`
 
-echo $FRECUENCIES
+echo frecuencies $FRECUENCIES
 
 java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES > $HOME/coupling.csv
-COUPLING=$(cat $$HOME/coupling.csv)
+COUPLING=`cat $HOME/coupling.csv`
 
-echo $COUPLING
+echo coupling $COUPLING
 
 if [ -z "$FREQUENCIES"] && [ -z "$COUPLING"]; then
     echo "::set-output name=frecuencies::$FREQUENCIES"
