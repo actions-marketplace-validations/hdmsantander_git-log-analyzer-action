@@ -17,13 +17,13 @@ FREQUENCIES=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log)
 COUPLING=$(java -jar $HOME/gitloganalyzer.jar -f $HOME/git.log -coupling $INPUT_MIN_COCHANGES)
 
 if [ -n "$FREQUENCIES" ]; then
-    echo "::set-output name=frecuencies::$FREQUENCIES"
+    printf "::set-output name=frecuencies::$FREQUENCIES"
 else
-    echo "::set-output name=frecuencies::empty"
+    printf "::set-output name=frecuencies::empty"
 fi
 
 if [ -n "$COUPLING" ]; then
-    echo "::set-output name=coupling::$COUPLING"
+    printf "::set-output name=coupling::$COUPLING"
 else
-    echo "::set-output name=coupling::empty"
+    printf "::set-output name=coupling::empty"
 fi
