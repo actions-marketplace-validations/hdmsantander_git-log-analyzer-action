@@ -5,9 +5,6 @@ inputs:
   init date:
     description: 'Starting date to analyze git log from, format is: yyyy-mm-dd'
     required: false
-  end date:
-    description: 'Ending date of the git log analysis, format is: yyyy-mm-dd'
-    required: false
   min cochanges:
     description: 'Minimum number of cochanges to report in coupling analysis'
     required: false
